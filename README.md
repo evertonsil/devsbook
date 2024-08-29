@@ -1,33 +1,20 @@
-## Instalação
-Você pode clonar este repositório OU baixar o .zip
+<h1>Devs Book - Rede Social</h1>
 
-Ao descompactar, é necessário rodar o **composer** pra instalar as dependências e gerar o *autoload*.
+<h2>Visão Geral</h2>
 
-Vá até a pasta do projeto, pelo *prompt/terminal* e execute:
-> composer install
+<p>Este projeto tem como objetivo a criação de uma rede social estilo Facebook, com opções de fazer posts, adicionar amigos, incluir fotos no perfil etc. O desenvolvimento seguirá o padrão de arquitetura MVC (Model-View-Controller) para garantir a separação das responsabilidades e facilitar a manutenção do código.</p>
 
-Depois é só aguardar.
+<h3>Estrutura do Projeto</h3>
+<ul>
+  <li><strong>HTML/CSS:</strong> A estrutura visual do projeto, incluindo o layout das páginas e a estilização dos elementos.</li>
+  <li><strong>PHP:</strong> A lógica do sistema será desenvolvida utilizando PHP, seguindo o padrão MVC.</li>
+  <li><strong>JavaScript: </strong> Para interatividade e funcionalidades dinâmicas na interface.</li>
+</ul>
 
-## Configuração
-Todos os arquivos de **configuração** e aplicação estão dentro da pasta *src*.
-
-As configurações de Banco de Dados e URL estão no arquivo *src/Config.php*
-
-É importante configurar corretamente a constante *BASE_DIR*:
-> const BASE_DIR = '/**PastaDoProjeto**/public';
-
-## Uso
-Você deve acessar a pasta *public* do projeto.
-
-O ideal é criar um ***alias*** específico no servidor que direcione diretamente para a pasta *public*.
-
-## Modelo de MODEL
-```php
-<?php
-namespace src\models;
-use \core\Model;
-
-class Usuario extends Model {
-
-}
-```
+<h3>Funcionalidades Planejadas</h3>
+<ul>
+  <li>Cadastro e login de usuários</li>
+  <li>Criação e edição de perfis</li>
+  <li>Postagem de atualizações de status</li>
+  <li>Comentários e curtidas em postagens</li>
+</ul>
