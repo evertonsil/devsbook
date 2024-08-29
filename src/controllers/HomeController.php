@@ -1,20 +1,26 @@
 <?php
+
 namespace src\controllers;
 
 use \core\Controller;
+use \src\handlers\LoginHandler;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
+    private $loggedUser;
 
-    public function index() {
-        $this->render('home', ['nome' => 'Bonieky']);
+    public function __construct()
+    {
+        //se existir usuário logado, atribui a variável
+        $this->loggedUser = LoginHandler::isLogged();
+        //verificando se o usuário está logado e é válido no método construtor
+        if (LoginHandler::isLogged() === false) {
+            $this->redirect('/login');
+        }
     }
 
-    public function sobre() {
-        $this->render('sobre');
+    public function index()
+    {
+        echo ('Olá Mundo!');
     }
-
-    public function sobreP($args) {
-        print_r($args);
-    }
-
 }

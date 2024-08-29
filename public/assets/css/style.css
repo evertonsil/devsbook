@@ -19,7 +19,7 @@ body {
     margin:auto;
 }
 header {
-    background-color:#4a76a8;
+    background-color:#6b4aa8;
     height:45px;
     box-shadow: 0px 0px 4px #333;
     position:relative;
@@ -54,7 +54,7 @@ header .head-side {
     align-items: center;
 }
 .search-area input {
-    background-color:#224b7a;
+    background-color:#39227a;
     background-image: url('../images/search.png');
     background-size: 13px;
     background-position-x: 10px;
@@ -123,7 +123,7 @@ header .head-side {
 .main aside nav a {
     text-decoration: none;
     display:block;
-    color:#224b7a;
+    color:#44227a;
     margin-bottom:5px;
 }
 .menu-splitter {
@@ -294,7 +294,7 @@ header .head-side {
 .profile-info-item-n {
     font-weight: bold;
     font-size:20px;
-    color:#224b7a;
+    color:#32227a;
 }
 .profile-info-item-s {
     font-size:14px;
@@ -305,7 +305,7 @@ header .head-side {
     display:flex;
     align-items: center;
     margin:20px;
-    color:#819db9;
+    color:#8b81b9;
     font-size:13px;
 }
 .user-info-mini img {
@@ -342,7 +342,7 @@ header .head-side {
     width:60px;
     font-size:14px;
     margin: auto;
-    color:#224b7a;
+    color:#41227a;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -374,7 +374,7 @@ header .head-side {
 }
 .tab-item.active {
     color:#000;
-    border-bottom:2px solid #224b7a;
+    border-bottom:2px solid #32227a;
 }
 .tab-body {
     display: none;
