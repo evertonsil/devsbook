@@ -16,17 +16,17 @@
     </header>
     <section class="container main">
         <form method="POST" action="<?= $base ?>/register">
-            <input placeholder="Digite seu nome" class="input" type="text" name="name" />
+            <input placeholder="Digite seu nome" class="input" type="text" name="name" required />
 
-            <input placeholder="Insira sua data de nascimento" class="input" type="date" name="birthdate" />
+            <input placeholder="Insira sua data de nascimento" class="input" type="date" name="birthdate" required />
 
-            <input placeholder="Digite sua cidade" class="input" type="text" name="city" />
+            <input placeholder="Digite sua cidade" class="input" type="text" name="city" required />
 
-            <input placeholder="Digite o nome da empresa onde trabalha" class="input" type="text" name="work" />
+            <input placeholder="Digite o nome da empresa onde trabalha" class="input" type="text" name="work" required />
 
-            <input placeholder="Digite seu e-mail" class="input" type="email" name="email" />
+            <input placeholder="Digite seu e-mail" class="input" type="email" name="email" required />
 
-            <input placeholder="Digite sua senha" class="input" type="password" name="password" />
+            <input placeholder="Digite sua senha" class="input" type="password" name="password" required />
 
             <input class="button" type="submit" value="Acessar o sistema" />
 

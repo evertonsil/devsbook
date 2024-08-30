@@ -8,6 +8,32 @@ use src\models\User;
 
 class LoginHandler
 {
+
+    public static function verifyLogin($usermail, $userpass)
+    {
+        //verificando se o email existe
+        $user = User::select()
+            ->where('email', $usermail)
+            ->one();
+        //validação da senha caso usuário existir
+        if ($user) {
+            //validando senha
+            if (password_verify($user['password'],  $userpass)) {
+                //gera o token, grava no banco e retorna
+                $token = bin2hex(random_bytes(16));
+
+                $updateToken = User::update()
+                    ->set('token', $token)
+                    ->where('id', $user['id'])
+                    ->execute();
+
+                if ($updateToken) {
+                    return $token;
+                }
+            }
+        }
+        return false;
+    }
     public static function isLogged()
     {
         if (!empty($_SESSION['token'])) {

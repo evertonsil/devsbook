@@ -16,9 +16,13 @@
     </header>
     <section class="container main">
         <form method="POST" action="<?= $base ?>/login">
-            <input placeholder="Digite seu e-mail" class="input" type="email" name="email" />
+            <input placeholder="Digite seu e-mail" class="input" type="email" name="email" required />
 
-            <input placeholder="Digite sua senha" class="input" type="password" name="password" />
+            <input placeholder="Digite sua senha" class="input" type="password" name="password" required />
+
+            <?php if (!empty($flash)): ?>
+                <p class="flash_error"><?= $flash; ?></p>
+            <?php endif; ?>
 
             <input class="button" type="submit" value="Acessar o sistema" />
 
