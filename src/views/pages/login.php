@@ -21,7 +21,7 @@
             <input placeholder="Digite sua senha" class="input" type="password" name="password" required />
 
             <?php if (!empty($flash)): ?>
-                <p class="flash_error"><?= $flash; ?></p>
+                <p class="flash-error"><?= $flash; ?></p>
             <?php endif; ?>
 
             <input class="button" type="submit" value="Acessar o sistema" />

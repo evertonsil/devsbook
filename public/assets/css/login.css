@@ -84,8 +84,11 @@ form a {
     color:#5b4aa8;
 }
 
-.flash_error{
+.flash-error{
     padding: 10px;
     color: #ff0000;
     font-size: 14px;
+}
+.padding-left-5{
+    padding-left: 5px;
 }
