@@ -39,18 +39,16 @@ class LoginHandler
         //validação da senha caso usuário existir
         if ($user) {
             //validando senha
-            if (password_verify($user['password'],  $userpass)) {
+            if (password_verify($userpass, $user['password'])) {
                 //gera o token, grava no banco e retorna
                 $token = bin2hex(random_bytes(16));
 
-                $updateToken = User::update()
+                User::update()
                     ->set('token', $token)
                     ->where('id', $user['id'])
                     ->execute();
 
-                if ($updateToken) {
-                    return $token;
-                }
+                return $token;
             }
         }
         return false;

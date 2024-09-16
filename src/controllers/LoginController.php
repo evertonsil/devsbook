@@ -46,7 +46,6 @@ class LoginController extends Controller
 
             //validando login no handler
             $token = LoginHandler::verifyLogin($usermail, $userpass);
-
             if ($token) {
                 $_SESSION['token'] = $token;
                 $this->redirect('/');
