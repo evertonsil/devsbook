@@ -21,7 +21,7 @@ class LoginHandler
             'email' => $usermail,
             'password' => $userpass,
             'birthdate' => $userbirth,
-            'avatar' => 'default.jpg',
+            'avatar' => 'avatar.jpg',
             'cover' => 'cover.jpg',
             'token' => $token
         ])->execute();
@@ -71,6 +71,7 @@ class LoginHandler
                 $loggedUser->id = $data['id'];
                 $loggedUser->name = $data['name'];
                 $loggedUser->email = $data['email'];
+                $loggedUser->avatar = $data['avatar'];
 
                 return $loggedUser;
             }
