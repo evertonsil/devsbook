@@ -25,7 +25,7 @@
     //Escuta o evento click do botão de enviar
     feedSubmit.addEventListener('click', function() {
         //Caputurando o valor digitado no campo "O que você está pensando"
-        let data = feedInput.innerText;
+        let data = feedInput.innerText.trim();
 
         //Caso existir valor, atirbui no form secundário e faz submit
         if (data != '') {
