@@ -11,8 +11,12 @@
 
                 <!-- Chamada View Feed Post -->
                 <?= $render('feed-post', ['user' => $loggedUser]); ?>
-                <!-- Chamada View Feed Item -->
-                <?= $render('feed-item'); ?>
+
+                <?php foreach ($feed as $feedItem): ?>
+                    <!-- Chamada View Feed Item -->
+                    <?= $render('feed-item', ['data' => $feedItem]); ?>
+                <?php endforeach; ?>
+
             </div>
             <div class="column side pl-5">
                 <div class="box banners">
