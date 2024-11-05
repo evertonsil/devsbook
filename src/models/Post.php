@@ -11,4 +11,8 @@ class Post extends Model
     public $created_at;
     public $body;
     public $user;
+    public $isOwner;
+    public $likesCount;
+    public $comments;
+    public $liked;
 }

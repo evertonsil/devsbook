@@ -50,6 +50,12 @@ class PostHandler
             $newPost->type = $post['type'];
             $newPost->created_at = $post['created_at'];
             $newPost->body = $post['body'];
+            $newPost->isOwner = false;
+
+            //verificando se usuário logado é titular do post
+            if ($post['id_user'] == $idUser) {
+                $newPost->isOwner = true;
+            }
 
             //chamando as informações do usuário "dono" dos posts
             $newUser = User::select()->where('id', $post['id_user'])->one();
@@ -60,6 +66,11 @@ class PostHandler
             $newPost->user->name = $newUser['name'];
             $newPost->user->avatar = $newUser['avatar'];
             $newPost->user->email = $newUser['email'];
+
+            //verificnado informações de comentários e likes de cada post
+            $newPost->liked = false;
+            $newPost->likesCount = 0;
+            $newPost->comments = [];
 
             //atribui todas as informações dos posts em um array
             $posts[] = $newPost;

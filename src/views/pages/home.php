@@ -14,7 +14,10 @@
 
                 <?php foreach ($feed as $feedItem): ?>
                     <!-- Chamada View Feed Item -->
-                    <?= $render('feed-item', ['data' => $feedItem]); ?>
+                    <?= $render('feed-item', [
+                        'data' => $feedItem,
+                        'loggedUser' => $loggedUser
+                    ]); ?>
                 <?php endforeach; ?>
 
             </div>
