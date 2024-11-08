@@ -404,6 +404,10 @@ header .head-side {
     background-color: #fff;
 }
 
+.feed-pagination a:hover{
+    background-color: #ddd;
+}
+
 @media (max-width: 992px) {
     header .head-side-right {
         display:none !important;
