@@ -25,8 +25,11 @@ class PostHandler
         }
     }
 
-    public static function getHomeFeed($idUser)
+    public static function getHomeFeed($idUser, $page)
     {
+        //variável para setar a quantidade de posts por página
+        $perPage = 5;
+
         //retornando lista de amigos do usuário logado
         $userList = UserRelation::select()->where('user_from', $idUser)->get();
         $users = [];
@@ -36,11 +39,20 @@ class PostHandler
         //adicionando o próprio usuário logado a lista
         $users[] = $idUser;
 
-        //chamando os posts dos amigos ordenados por data
+        //chamando os posts dos amigos ordenados por data e páginados
         $postList = Post::select()
             ->whereIn('id_user', $users)
             ->orderBy('created_at', 'desc')
+            ->page($page, $perPage)
             ->get();
+
+        //chamando a quantidade total de posts
+        $postTotal = Post::select()
+            ->whereIn('id_user', $users)
+            ->count();
+
+        //capturando a quantidade de páginas necessárias
+        $qtdPages = ceil($postTotal / $perPage);
 
         //convertendo lista de posts em objetos
         $posts = [];
@@ -75,6 +87,10 @@ class PostHandler
             //atribui todas as informações dos posts em um array
             $posts[] = $newPost;
         }
-        return $posts;
+        return [
+            'posts' => $posts,
+            'qtdPages' => $qtdPages,
+            'currentPage' => $page
+        ];
     }
 }
