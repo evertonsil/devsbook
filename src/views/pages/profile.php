@@ -2,7 +2,7 @@
 
 <section class="container main">
     <!-- Chamada da View Sidebar -->
-    <?= $render('sidebar'); ?>
+    <?= $render('sidebar', ['activeMenu' => 'profile']); ?>
     <section class="feed">
         <div class="row">
             <div class="box flex-1 border-top-flat">
