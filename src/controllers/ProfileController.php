@@ -22,6 +22,9 @@ class ProfileController extends Controller
 
     public function index($atts = [])
     {
+        //capturando a página atual pela query string
+        $page = intval(filter_input(INPUT_GET, 'page'));
+
         //por padrão, atribui o ID do usuário logado
         $idUser = $this->loggedUser->id;
 
@@ -38,9 +41,17 @@ class ProfileController extends Controller
             $this->redirect('/404');
         }
 
+        //chamando o feed do usuário
+        $feed = PostHandler::getUserFeed(
+            $idUser,
+            $page,
+            $this->loggedUser->id
+        );
+
         $this->render('profile', [
             'loggedUser' => $this->loggedUser,
-            'user' => $user
+            'user' => $user,
+            'feed' => $feed
         ]);
     }
 }
