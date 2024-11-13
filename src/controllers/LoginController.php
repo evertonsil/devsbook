@@ -3,7 +3,7 @@
 namespace src\controllers;
 
 use \core\Controller;
-use src\handlers\LoginHandler;
+use src\handlers\UserHandler;
 
 class LoginController extends Controller
 {
@@ -45,7 +45,7 @@ class LoginController extends Controller
         if ($usermail && $userpass) {
 
             //validando login no handler
-            $token = LoginHandler::verifyLogin($usermail, $userpass);
+            $token = UserHandler::verifyLogin($usermail, $userpass);
             if ($token) {
                 $_SESSION['token'] = $token;
                 $this->redirect('/');
@@ -69,13 +69,13 @@ class LoginController extends Controller
 
         if ($username && $usermail  && $userpass && $userbirth) {
             //verifica se o usuário já existe
-            $user = LoginHandler::isRegistered($usermail);
+            $user = UserHandler::isRegistered($usermail);
 
             if (!$user) {
                 //validando a data (ela vem como yyyy-mm-dd)
                 if (strtotime($userbirth)) {
                     //se a data for válida, cadastra o usuário e já envia o token retornado pelo método, fazendo o login automaticamente
-                    $token = LoginHandler::registerUser($username, $usermail, $userpass, $userbirth);
+                    $token = UserHandler::registerUser($username, $usermail, $userpass, $userbirth);
                     $_SESSION['token'] = $token;
                     $this->redirect('/');
                 } else {

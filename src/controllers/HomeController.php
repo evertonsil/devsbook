@@ -3,7 +3,7 @@
 namespace src\controllers;
 
 use \core\Controller;
-use \src\handlers\LoginHandler;
+use \src\handlers\UserHandler;
 use src\handlers\PostHandler;
 
 class HomeController extends Controller
@@ -13,9 +13,9 @@ class HomeController extends Controller
     public function __construct()
     {
         //se existir usuário logado, atribui a variável
-        $this->loggedUser = LoginHandler::isLogged();
+        $this->loggedUser = UserHandler::isLogged();
         //verificando se o usuário está logado e é válido no método construtor
-        if (LoginHandler::isLogged() === false) {
+        if (UserHandler::isLogged() === false) {
             $this->redirect('/login');
         }
     }
