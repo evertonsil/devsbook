@@ -93,4 +93,27 @@ class PostHandler
             'currentPage' => $page
         ];
     }
+
+    public static function getUserPhotos($userID)
+    {
+        $photosData = Post::select()
+            ->where('id_user', $userID)
+            ->where('type', 'photos')
+            ->get();
+
+        $photos = [];
+
+        //criando um novo objeto post e adicionando as informações das fotos do usuário
+        foreach ($photosData as $photo) {
+            $newPost = new Post();
+            $newPost->id = $photo['id'];
+            $newPost->type = $photo['type'];
+            $newPost->created_at = $photo['created_at'];
+            $newPost->body = $photo['body'];
+
+            $photos[] = $newPost;
+        }
+
+        return $photos;
+    }
 }

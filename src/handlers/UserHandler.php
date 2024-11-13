@@ -7,6 +7,7 @@ namespace src\handlers;
 use Exception;
 use src\models\User;
 use src\models\UserRelation;
+use src\handlers\PostHandler;
 
 class UserHandler
 {
@@ -118,7 +119,6 @@ class UserHandler
                 $followers = UserRelation::select()
                     ->where('user_to', $id)
                     ->get();
-                var_dump($followers);
 
                 //armazenando os dados de cada seguidor do usuário
                 foreach ($followers as $follower) {
@@ -154,6 +154,7 @@ class UserHandler
                     $user->following[] = $newUser;
                 }
                 //puxando fotos do usuário
+                $user->photos = PostHandler::getUserPhotos($id);
             }
 
             return $user;

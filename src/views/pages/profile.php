@@ -103,43 +103,18 @@
                         </div>
                     </div>
                     <div class="box-body row m-20">
-
-                        <div class="user-photo-item">
-                            <a href="#modal-1" rel="modal:open">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </a>
-                            <div id="modal-1" style="display:none">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </div>
-                        </div>
-
-                        <div class="user-photo-item">
-                            <a href="#modal-2" rel="modal:open">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </a>
-                            <div id="modal-2" style="display:none">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </div>
-                        </div>
-
-                        <div class="user-photo-item">
-                            <a href="#modal-3" rel="modal:open">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </a>
-                            <div id="modal-3" style="display:none">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </div>
-                        </div>
-
-                        <div class="user-photo-item">
-                            <a href="#modal-4" rel="modal:open">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </a>
-                            <div id="modal-4" style="display:none">
-                                <img src="<?= $base ?>/media/uploads/1.jpg" />
-                            </div>
-                        </div>
-
+                        <?php for ($quant = 0; $quant < 4; $quant++) : ?>
+                            <?php if (isset($user->photos[$quant])): ?>
+                                <div class="user-photo-item">
+                                    <a href="#modal-<?= $user->photos[$quant]->id ?>" rel="modal:open">
+                                        <img src="<?= $base ?>/media/uploads/<?= $user->photos[$quant]->body ?>" />
+                                    </a>
+                                    <div id="modal-<?= $user->photos[$quant]->id ?>" style="display:none">
+                                        <img src="<?= $base ?>/media/uploads/<?= $user->photos[$quant]->body ?>" />
+                                    </div>
+                                </div>
+                            <?php endif ?>
+                        <?php endfor ?>
                     </div>
                 </div>
 
