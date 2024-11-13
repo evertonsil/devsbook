@@ -54,10 +54,48 @@ class PostHandler
         //capturando a quantidade de páginas necessárias
         $qtdPages = ceil($postTotal / $perPage);
 
+        //chamando função para convertos a lista de postagens em objeto
+        $posts = self::_postListToObject($postList, $idUser);
+
+        return [
+            'posts' => $posts,
+            'qtdPages' => $qtdPages,
+            'currentPage' => $page
+        ];
+    }
+
+    public static function getUserFeed($userID, $page, $loggedUser)
+    {
+        //chamando os posts do próprio usuário
+        $perPage = 5;
+        $userPosts = Post::select()
+            ->where('id_user', $userID)
+            ->orderBy('created_at', 'desc')
+            ->page($page, $perPage)
+            ->get();
+
+        //chamando a quantidade total de posts do usuário
+        $totalPosts = Post::select()
+            ->where('id_user', $userID)
+            ->count();
+        $pageCount = ceil($totalPosts / $perPage);
+
+        //chamando função para convertos a lista de postagens em objeto
+        $posts = self::_postListToObject($userPosts, $loggedUser);
+
+        return [
+            'posts' => $posts,
+            'qtdPages' => $pageCount,
+            'currentPage' => $page
+        ];
+    }
+
+    public static function _postListToObject($postList, $loggedUser)
+    {
         //convertendo lista de posts em objetos
         $posts = [];
         foreach ($postList as $post) {
-            $newPost = new  Post();
+            $newPost = new Post();
             $newPost->id = $post['id'];
             $newPost->type = $post['type'];
             $newPost->created_at = $post['created_at'];
@@ -65,7 +103,7 @@ class PostHandler
             $newPost->isOwner = false;
 
             //verificando se usuário logado é titular do post
-            if ($post['id_user'] == $idUser) {
+            if ($post['id_user'] == $loggedUser) {
                 $newPost->isOwner = true;
             }
 
@@ -87,18 +125,15 @@ class PostHandler
             //atribui todas as informações dos posts em um array
             $posts[] = $newPost;
         }
-        return [
-            'posts' => $posts,
-            'qtdPages' => $qtdPages,
-            'currentPage' => $page
-        ];
+
+        return $posts;
     }
 
     public static function getUserPhotos($userID)
     {
         $photosData = Post::select()
             ->where('id_user', $userID)
-            ->where('type', 'photos')
+            ->where('type', 'photo')
             ->get();
 
         $photos = [];
