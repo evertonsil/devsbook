@@ -117,6 +117,11 @@
                         <?php endfor ?>
                     </div>
                 </div>
+                <!-- Chamada View Feed Post -->
+                <?php if ($user->id == $loggedUser->id): ?>
+                    <?= $render('feed-post', ['user' => $loggedUser]); ?>
+                <?php endif ?>
+
                 <?php foreach ($feed['posts'] as $feedItem): ?>
                     <!-- Chamada View Feed Item -->
                     <?= $render('feed-item', [
