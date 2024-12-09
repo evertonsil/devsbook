@@ -36,6 +36,7 @@ class LoginController extends Controller
         ]);
     }
 
+
     //rota para login de usuário
     public function signinAction()
     {
@@ -90,5 +91,14 @@ class LoginController extends Controller
             $_SESSION['flash'] = 'Por favor preencha todos os campos corretamente.';
             $this->redirect('/cadastro');
         }
+    }
+
+    //rota pada logout
+    public function signout()
+    {
+        session_start();
+        session_destroy();
+        header("Location: login");
+        exit;
     }
 }
