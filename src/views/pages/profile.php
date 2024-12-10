@@ -17,6 +17,18 @@
                             <div class="profile-info-location"><?= $user->city; ?></div>
                         </div>
                         <div class="profile-info-data row">
+                            <!-- verificando se usuário está no próprio perfil -->
+                            <?php if ($user->id != $loggedUser->id): ?>
+                                <div class="profile-info-item m-width-20">
+                                    <div class="profile-info-item-s">
+                                        <?php if ($isFollowing): ?>
+                                            <a href="" class="button">Deixar de seguir</a>
+                                        <?php else: ?>
+                                            <a href="" class="button">Seguir</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                             <div class="profile-info-item m-width-20">
                                 <div class="profile-info-item-n"><?= count($user->followers) ?></div>
                                 <div class="profile-info-item-s">Seguidores</div>

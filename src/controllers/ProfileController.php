@@ -48,10 +48,17 @@ class ProfileController extends Controller
             $this->loggedUser->id
         );
 
+        //verificando se usuário logado segue o usuário acessado
+        if ($user->id != $this->loggedUser->id) {
+            $isFollowing = false;
+            $isFollowing = UserHandler::isFollowing($this->loggedUser->id, $user->id);
+        }
+
         $this->render('profile', [
             'loggedUser' => $this->loggedUser,
             'user' => $user,
-            'feed' => $feed
+            'feed' => $feed,
+            'isFollowing' => $isFollowing
         ]);
     }
 }

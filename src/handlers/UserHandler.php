@@ -162,4 +162,15 @@ class UserHandler
 
         return false;
     }
+
+    public static function isFollowing($from, $to)
+    {
+        $follow = UserRelation::select()
+            ->where('user_from', $from)
+            ->where('user_to', $to)
+            ->one();
+
+        //retorna true se houver resultado
+        return $follow ? true : false;
+    }
 }
