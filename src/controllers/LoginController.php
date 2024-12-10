@@ -98,7 +98,7 @@ class LoginController extends Controller
     {
         session_start();
         session_destroy();
-        header("Location: login");
-        exit;
+        //redireciona para a view Login
+        $this->redirect('/login');
     }
 }
