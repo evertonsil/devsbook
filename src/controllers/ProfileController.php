@@ -78,4 +78,34 @@ class ProfileController extends Controller
 
         $this->redirect('/profile/' . $user_to);
     }
+
+    public function friends($atts = [])
+    {
+        //verifica se existe ID na rota de perfil
+        $idUser = $this->loggedUser->id;
+        if (!empty($atts['id'])) {
+            $idUser = $atts['id'];
+        }
+
+        //captura informações do usuário
+        $user = UserHandler::getUser($idUser, true);
+
+        //verifica se o usuário retornado existe
+        if (!$user) {
+            $this->redirect('/404');
+        }
+
+        //verificando se usuário logado segue o usuário acessado
+        $isFollowing = false;
+        if ($user->id != $this->loggedUser->id) {
+            $isFollowing = UserHandler::isFollowing($this->loggedUser->id, $user->id);
+        }
+
+        //renderizando view da página de amigos
+        $this->render('profile_friends', [
+            'loggedUser' => $this->loggedUser,
+            'user' => $user,
+            'isFollowing' => $isFollowing
+        ]);
+    }
 }

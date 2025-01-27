@@ -1,6 +1,7 @@
 <?php
 
 use core\Router;
+use src\controllers\ProfileController;
 
 $router = new Router();
 
@@ -12,9 +13,12 @@ $router->get('/cadastro', 'LoginController@signup');
 
 $router->get('/logout', 'LoginController@signout');
 
+$router->get('/profile/{id}/friends', 'ProfileController@friends');
 $router->get('/profile/{id}/follow', 'ProfileController@follow');
 $router->get('/profile/{id}', 'ProfileController@index');
 $router->get('/profile', 'ProfileController@index');
+
+$router->get('/friends', 'ProfileController@friends');
 
 $router->post('/login', 'LoginController@signinAction');
 
