@@ -12,6 +12,7 @@ $router->get('/cadastro', 'LoginController@signup');
 
 $router->get('/logout', 'LoginController@signout');
 
+$router->get('/profile/{id}/follow', 'ProfileController@follow');
 $router->get('/profile/{id}', 'ProfileController@index');
 $router->get('/profile', 'ProfileController@index');
 
