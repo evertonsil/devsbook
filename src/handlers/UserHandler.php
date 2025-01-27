@@ -31,6 +31,13 @@ class UserHandler
         return $token;
     }
 
+    //verifica se usuário existe
+    public static function idExists($id)
+    {
+        $user = User::select()->where('id', $id)->one();
+        return $user ? true : false;
+    }
+
     //fazendo login de usuário existente
     public static function verifyLogin($usermail, $userpass)
     {
@@ -172,5 +179,21 @@ class UserHandler
 
         //retorna true se houver resultado
         return $follow ? true : false;
+    }
+
+    public static function follow($user_from, $user_to)
+    {
+        UserRelation::insert([
+            'user_from' => $user_from,
+            'user_to' => $user_to
+        ])->execute();
+    }
+
+    public static function unfollow($user_from, $user_to)
+    {
+        UserRelation::delete()
+            ->where('user_from', $user_from)
+            ->where('user_to', $user_to)
+            ->execute();
     }
 }
