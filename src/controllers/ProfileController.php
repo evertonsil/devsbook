@@ -49,8 +49,8 @@ class ProfileController extends Controller
         );
 
         //verificando se usuário logado segue o usuário acessado
+        $isFollowing = false;
         if ($user->id != $this->loggedUser->id) {
-            $isFollowing = false;
             $isFollowing = UserHandler::isFollowing($this->loggedUser->id, $user->id);
         }
 
