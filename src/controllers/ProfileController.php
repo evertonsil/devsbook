@@ -108,4 +108,33 @@ class ProfileController extends Controller
             'isFollowing' => $isFollowing
         ]);
     }
+
+    public function photos($atts = [])
+    {
+        //verifica se existe ID na rota de perfil
+        $idUser = $this->loggedUser->id;
+        if (!empty($atts['id'])) {
+            $idUser = $atts['id'];
+        }
+
+        //captura informações do usuário
+        $user = UserHandler::getUser($idUser, true);
+
+        //verifica se usuário exsite
+        if (!$user) {
+            $this->redirect('/404');
+        }
+
+        //verificando se usuário logado segue o usuário acessado
+        $isFollowing = false;
+        if ($user->id != $this->loggedUser->id) {
+            $isFollowing = UserHandler::isFollowing($this->loggedUser->id, $user->id);
+        }
+
+        $this->render('profile_photos', [
+            'loggedUser' => $this->loggedUser,
+            'user' => $user,
+            'isFollowing' => $isFollowing
+        ]);
+    }
 }
