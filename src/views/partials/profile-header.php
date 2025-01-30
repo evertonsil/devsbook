@@ -12,9 +12,8 @@
                 <div class="profile-info-name">
                     <div class="profile-info-name-text">
                         <a href="<?= $base ?>/profile/<?= $user->id; ?>">
-                            <?= $user->name; ?>
-                        </a>
-                    </div>
+                        <?= $user->name; ?></div>
+                    </a>
                     <div class="profile-info-location"><?= $user->city; ?></div>
                 </div>
                 <div class="profile-info-data row">

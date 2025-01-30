@@ -1,7 +1,6 @@
 <?php
 
 use core\Router;
-use src\controllers\ProfileController;
 
 $router = new Router();
 
@@ -22,6 +21,8 @@ $router->get('/profile', 'ProfileController@index');
 $router->get('/friends', 'ProfileController@friends');
 
 $router->get('/photos', 'ProfileController@photos');
+
+$router->get('/search', 'SearchController@index');
 
 $router->post('/login', 'LoginController@signinAction');
 

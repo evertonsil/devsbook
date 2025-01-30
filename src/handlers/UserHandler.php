@@ -4,10 +4,8 @@
 
 namespace src\handlers;
 
-use Exception;
 use src\models\User;
 use src\models\UserRelation;
-use src\handlers\PostHandler;
 
 class UserHandler
 {
@@ -195,5 +193,26 @@ class UserHandler
             ->where('user_from', $user_from)
             ->where('user_to', $user_to)
             ->execute();
+    }
+
+    public static function searchUser($username)
+    {
+        $users = [];
+        $data = User::select()
+            ->where('name', 'like', '%' . $username . '%')
+            ->get();
+
+        if ($data) {
+            foreach ($data as $user) {
+                $newUser = new User();
+                $newUser->id = $user['id'];
+                $newUser->name = $user['name'];
+                $newUser->avatar = $user['avatar'];
+
+                $users[] = $newUser;
+            }
+        }
+        
+        return $users;
     }
 }
