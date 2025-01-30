@@ -21,27 +21,13 @@
                 <?php endforeach; ?>
                 <div class="feed-pagination">
                     <?php for ($page = 0; $page < $feed['qtdPages']; $page++): ?>
-                        <a class="<?= ($page == $feed['currentPage'] ? 'active' : '') ?>" href="<?= $base ?>?page=<?= $page; ?>"><?= $page + 1; ?></a>
+                        <a class="<?= ($page == $feed['currentPage'] ? 'active' : '') ?>"
+                           href="<?= $base ?>?page=<?= $page; ?>"><?= $page + 1; ?></a>
                     <?php endfor; ?>
                 </div>
             </div>
             <div class="column side pl-5">
-                <div class="box banners">
-                    <div class="box-header">
-                        <div class="box-header-text">Patrocinios</div>
-                        <div class="box-header-buttons">
-
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <a href=""><img src="assets/images/php.jpg" /></a>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-body m-10">
-                        Criado com ❤️ Everton Marques
-                    </div>
-                </div>
+                <?= $render('right-sidebar'); ?>
             </div>
         </div>
 
