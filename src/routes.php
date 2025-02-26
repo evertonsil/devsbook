@@ -24,9 +24,13 @@ $router->get('/photos', 'ProfileController@photos');
 
 $router->get('/search', 'SearchController@index');
 
+$router->get('/settings', 'ProfileController@settings');
+
 $router->post('/login', 'LoginController@signinAction');
 
 $router->post('/register', 'LoginController@signupAction');
+
+$router->post('/update', 'ProfileController@updateAction');
 
 $router->post('/post/new', 'PostController@new');
 

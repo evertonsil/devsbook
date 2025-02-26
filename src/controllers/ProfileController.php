@@ -2,9 +2,9 @@
 
 namespace src\controllers;
 
-use \core\Controller;
-use \src\handlers\UserHandler;
+use core\Controller;
 use src\handlers\PostHandler;
+use src\handlers\UserHandler;
 
 class ProfileController extends Controller
 {
@@ -71,7 +71,8 @@ class ProfileController extends Controller
             //veririca se o usuário logado está seguindo o usuário
             if (UserHandler::isFollowing($this->loggedUser->id, $user_to)) {
                 UserHandler::unfollow($this->loggedUser->id, $user_to);
-            } else {
+            }
+            else {
                 UserHandler::follow($this->loggedUser->id, $user_to);
             }
         }
@@ -137,4 +138,85 @@ class ProfileController extends Controller
             'isFollowing' => $isFollowing
         ]);
     }
+
+    public function settings()
+    {
+        $user = UserHandler::getUser($this->loggedUser->id);
+
+        $flash = '';
+
+        if (!empty($_SESSION['flash'])) {
+            $flash = $_SESSION['flash'];
+            unset($_SESSION['flash']);
+        }
+
+        $this->render('profile_settings', [
+            'loggedUser' => $this->loggedUser,
+            'user' => $user,
+            'flash' => $flash
+        ]);
+    }
+
+    public function updateAction()
+    {
+        $avatar = $_FILES['avatar'] ?? null;
+        $cover = $_FILES['cover'] ?? null;
+
+        $username = filter_input(INPUT_POST, 'name');
+        $userbirth = filter_input(INPUT_POST, 'birthdate');
+        $usermail = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+        $city = filter_input(INPUT_POST, 'city');
+        $work = filter_input(INPUT_POST, 'work');
+        $userpass = filter_input(INPUT_POST, 'password');
+        $userpassConfirm = filter_input(INPUT_POST, 'confirm-password');
+
+        $today = date("Y-m-d");
+
+        //verificando os dados obrigatórios
+        if ($username && $usermail) {
+            //validando data de nascimento
+            if (!validateDate($userbirth)) {
+                $_SESSION['flash'] = "Data de nascimento inválida.";
+                $this->redirect('/settings');
+            }
+
+            //validando senhas, caso houver
+            if (!empty($userpass) && !empty($userpassConfirm)) {
+                if ($userpass != $userpassConfirm) {
+                    $_SESSION['flash'] = "As senhas não conferem.";
+                    $this->redirect('/settings');
+                }
+                //realizando update dos dados com a senha
+                UserHandler::updateUser($this->loggedUser->id, $username, $usermail, $userbirth, $city, $work, $userpass);
+                $this->redirect('/profile/' . $this->loggedUser->id);
+            }
+
+            //realizando update dos dados
+            UserHandler::updateUser($this->loggedUser->id, $username, $usermail, $userbirth, $city, $work);
+            $this->redirect('/profile/' . $this->loggedUser->id);
+        }
+        else {
+            $_SESSION['flash'] = 'Por favor preencha os campos obrigatórios.';
+            $this->redirect('/settings');
+        }
+    }
+}
+
+function validateDate($date)
+{
+    $parts = explode('-', $date);
+    if (count($parts) !== 3) return false;
+
+    list($year, $month, $day) = $parts;
+
+    // Verifica se a data é válida
+    if (!checkdate($month, $day, $year)) {
+        return false;
+    }
+
+    // Converte a data para um timestamp e compara com a data atual
+    $birthdate = strtotime($date);
+    $today = strtotime(date('Y-m-d'));
+
+    return $birthdate <= $today;
 }

@@ -104,10 +104,11 @@ class UserHandler
             ->one();
 
         if ($data) {
-            //montando um novo objeto usuário com o dados recuperados
+            //montando um novo objeto usuário com os dados recuperados
             $user = new User();
             $user->id = $data['id'];
             $user->name = $data['name'];
+            $user->email = $data['email'];
             $user->birthdate = $data['birthdate'];
             $user->city = $data['city'];
             $user->work = $data['work'];
@@ -212,7 +213,38 @@ class UserHandler
                 $users[] = $newUser;
             }
         }
-        
+
         return $users;
+    }
+
+    public function updateUser($userId, $name, $email, $birthdate, $city, $work, $password = '')
+    {
+        if (!empty($password)) {
+            $hash = password_hash($password, PASSWORD_BCRYPT);
+
+            User::update()
+                ->where('id', $userId)
+                ->set([
+                    'name' => $name,
+                    'email' => $email,
+                    'birthdate' => $birthdate,
+                    'city' => $city,
+                    'work' => $work,
+                    'password' => $hash
+                ])
+                ->execute();
+        }
+        else {
+            User::update()
+                ->where('id', $userId)
+                ->set([
+                    'name' => $name,
+                    'email' => $email,
+                    'birthdate' => $birthdate,
+                    'city' => $city,
+                    'work' => $work,
+                ])
+                ->execute();
+        }
     }
 }
