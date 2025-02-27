@@ -31,4 +31,26 @@ class AjaxController extends Controller
         }
     }
 
+    public function comment($atts)
+    {
+        $response = ['error' => ''];
+
+        $id = filter_input(INPUT_POST, 'id');
+        $body = filter_input(INPUT_POST, 'txt');
+
+        if ($id && $body) {
+            PostHandler::insertComment($id, $body, $this->loggedUser->id);
+
+            //preenchendo array para o js construir a div de comentários
+            $response['link'] = '/perfil/' . $this->loggedUser->id;
+            $response['avatar'] = '/media/avatars/' . $this->loggedUser->avatar;
+            $response['name'] = $this->loggedUser->name;
+            $response['body'] = $body;
+        }
+
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        exit();
+    }
+
 }

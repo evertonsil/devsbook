@@ -5,6 +5,7 @@
 namespace src\handlers;
 
 use src\models\Post;
+use src\models\PostComment;
 use src\models\PostLike;
 use src\models\User;
 use src\models\UserRelation;
@@ -96,7 +97,13 @@ class PostHandler
 
             $newPost->likesCount = count($postLikes);
             $newPost->liked = self::isLiked($post['id'], $loggedUser);
-            $newPost->comments = [];
+
+            $newPost->comments = PostComment::select()->where('post_id', $post['id'])->get();
+
+            //capturando informações do usuário que comentou
+            foreach ($newPost->comments as $key => $comment) {
+                $newPost->comments[$key]['user'] = User::select()->where('id', $comment['user_id'])->one();
+            }
 
             //atribui todas as informações dos posts em um array
             $posts[] = $newPost;
@@ -132,6 +139,15 @@ class PostHandler
         PostLike::insert([
             'post_id' => $postID,
             'user_id' => $loggedUserID
+        ])->execute();
+    }
+
+    public static function insertComment($postID, $body, $loggedUserID)
+    {
+        PostComment::insert([
+            'post_id' => $postID,
+            'user_id' => $loggedUserID,
+            'body' => $body
         ])->execute();
     }
 

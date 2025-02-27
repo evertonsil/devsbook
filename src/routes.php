@@ -28,6 +28,8 @@ $router->get('/settings', 'ProfileController@settings');
 
 $router->get('/ajax/like/{id}', 'AjaxController@like');
 
+$router->post('/ajax/comment', 'AjaxController@comment');
+
 $router->post('/login', 'LoginController@signinAction');
 
 $router->post('/register', 'LoginController@signupAction');
