@@ -4,6 +4,7 @@ namespace src\models;
 
 use core\Model;
 
-class UserRelation extends Model
+class PostLike extends Model
 {
+
 }

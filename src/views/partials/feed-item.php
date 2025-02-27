@@ -1,8 +1,8 @@
-<div class="box feed-item">
+<div class="box feed-item" data-id=<?= $data->id; ?>>
     <div class="box-body">
         <div class="feed-item-head row mt-20 m-width-20">
             <div class="feed-item-head-photo">
-                <a href=""><img src="<?= $base; ?>/media/avatars/<?= $data->user->avatar; ?>" /></a>
+                <a href=""><img src="<?= $base; ?>/media/avatars/<?= $data->user->avatar; ?>"/></a>
             </div>
             <div class="feed-item-head-info">
                 <a href=""><span class="fidi-name"><?= $data->user->name; ?></span></a>
@@ -19,11 +19,11 @@
                             break;
                     } ?>
                 </span>
-                <br />
+                <br/>
                 <span class="fidi-date"><?= date('d/m/Y', strtotime($data->created_at)); ?></span>
             </div>
             <div class="feed-item-head-btn">
-                <img src="<?= $base; ?>/assets/images/more.png" />
+                <img src="<?= $base; ?>/assets/images/more.png"/>
             </div>
         </div>
         <div class="feed-item-body mt-10 m-width-20">
@@ -57,9 +57,9 @@
 
             <div class="fic-answer row m-height-10 m-width-20">
                 <div class="fic-item-photo">
-                    <a href=""><img src="<?= $base; ?>/media/avatars/<?= $loggedUser->avatar; ?>" /></a>
+                    <a href=""><img src="<?= $base; ?>/media/avatars/<?= $loggedUser->avatar; ?>"/></a>
                 </div>
-                <input type="text" class="fic-item-field" placeholder="Escreva um comentário" />
+                <input type="text" class="fic-item-field" placeholder="Escreva um comentário"/>
             </div>
 
         </div>

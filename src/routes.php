@@ -26,6 +26,8 @@ $router->get('/search', 'SearchController@index');
 
 $router->get('/settings', 'ProfileController@settings');
 
+$router->get('/ajax/like/{id}', 'AjaxController@like');
+
 $router->post('/login', 'LoginController@signinAction');
 
 $router->post('/register', 'LoginController@signupAction');

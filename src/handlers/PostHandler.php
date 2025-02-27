@@ -4,8 +4,8 @@
 
 namespace src\handlers;
 
-use Exception;
 use src\models\Post;
+use src\models\PostLike;
 use src\models\User;
 use src\models\UserRelation;
 
@@ -64,32 +64,6 @@ class PostHandler
         ];
     }
 
-    public static function getUserFeed($userID, $page, $loggedUser)
-    {
-        //chamando os posts do próprio usuário
-        $perPage = 5;
-        $userPosts = Post::select()
-            ->where('id_user', $userID)
-            ->orderBy('created_at', 'desc')
-            ->page($page, $perPage)
-            ->get();
-
-        //chamando a quantidade total de posts do usuário
-        $totalPosts = Post::select()
-            ->where('id_user', $userID)
-            ->count();
-        $pageCount = ceil($totalPosts / $perPage);
-
-        //chamando função para convertos a lista de postagens em objeto
-        $posts = self::_postListToObject($userPosts, $loggedUser);
-
-        return [
-            'posts' => $posts,
-            'qtdPages' => $pageCount,
-            'currentPage' => $page
-        ];
-    }
-
     public static function _postListToObject($postList, $loggedUser)
     {
         //convertendo lista de posts em objetos
@@ -118,8 +92,10 @@ class PostHandler
             $newPost->user->email = $newUser['email'];
 
             //verificnado informações de comentários e likes de cada post
-            $newPost->liked = false;
-            $newPost->likesCount = 0;
+            $postLikes = PostLike::select()->where('post_id', $post['id'])->get();
+
+            $newPost->likesCount = count($postLikes);
+            $newPost->liked = self::isLiked($post['id'], $loggedUser);
             $newPost->comments = [];
 
             //atribui todas as informações dos posts em um array
@@ -127,6 +103,62 @@ class PostHandler
         }
 
         return $posts;
+    }
+
+    public static function isLiked($postID, $loggedUserID): bool
+    {
+        $liked = PostLike::select()
+            ->where('post_id', $postID)
+            ->where('user_id', $loggedUserID)
+            ->get();
+        if (count($liked) > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static function deleteLike($postID, $loggedUserID)
+    {
+        PostLike::delete()
+            ->where('post_id', $postID)
+            ->where('user_id', $loggedUserID)
+            ->execute();
+    }
+
+    public static function insertLike($postID, $loggedUserID)
+    {
+        PostLike::insert([
+            'post_id' => $postID,
+            'user_id' => $loggedUserID
+        ])->execute();
+    }
+
+    public static function getUserFeed($userID, $page, $loggedUser)
+    {
+        //chamando os posts do próprio usuário
+        $perPage = 5;
+        $userPosts = Post::select()
+            ->where('id_user', $userID)
+            ->orderBy('created_at', 'desc')
+            ->page($page, $perPage)
+            ->get();
+
+        //chamando a quantidade total de posts do usuário
+        $totalPosts = Post::select()
+            ->where('id_user', $userID)
+            ->count();
+        $pageCount = ceil($totalPosts / $perPage);
+
+        //chamando função para convertos a lista de postagens em objeto
+        $posts = self::_postListToObject($userPosts, $loggedUser);
+
+        return [
+            'posts' => $posts,
+            'qtdPages' => $pageCount,
+            'currentPage' => $page
+        ];
     }
 
     public static function getUserPhotos($userID)
